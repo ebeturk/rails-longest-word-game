@@ -1,0 +1,21 @@
+<div class="card card-info m-3 p-3 col-sm-5 text-center">
+  <h1 class="text-info">RESULT</h1>
+  <p>
+    <% if !@valid_word %>
+      <p>
+        Sorry, but <strong><%= @word.upcase %></strong>can't be built out of <%= @letters.split.join(", ") %>
+      </p>
+    <% elsif !@a_word %>
+       <p>
+        Sorry, but <strong><%= @word.upcase %></strong> doesn't seem to be a valid English word!
+      </p>
+    <% else %>
+      <p>
+        Congratulations! <strong><%= @word.upcase %></strong> is a <%= @word.length %> letter word.
+        And your score is: <span class="alert alert-success"><%= @score %></span>
+      </p>
+  <% end %>
+
+  </p>
+  <%= link_to "Play Again", new_path, class: "btn btn-outline-success" %>
+</div>

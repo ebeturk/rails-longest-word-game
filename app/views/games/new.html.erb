@@ -1,0 +1,39 @@
+<div class="card m-3 p-3 col-sm-6">
+  <h1 class="text-info">New Game</h1>
+  <div class="letters">
+    <ul class="list-inline">
+      <% @letters.each do |letter| %>
+        <li class="alert alert-info list-inline-item"><%= letter %></li>
+      <% end %>
+    </ul>
+    <p>What is the longest word you can find?</p>
+    <form action="score" method="post" data-turbo="false">
+      <div class="input-group">
+        <input type="text" name="word" class="form-control">
+        <input type="submit" value="Play" class="btn btn-outline-dark">
+        <input type="hidden" id="timeLeft" name="timeLeft" value="">
+      </div>
+      <%= hidden_field_tag :letters, @letters %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    </form>
+  </div>
+</div>
+<div id="timer" class="col-1 alert alert-danger m-3 text-center">60</div>
+
+<script>
+  let timeLeft = localStorage.getItem('timeLeft') || 60; // set the time (in seconds)
+
+  // The setInterval function will run the function every 1000ms (or 1 second)
+  const countdown = setInterval(function() {
+    timeLeft--;
+    document.getElementById('timer').innerText = timeLeft;
+    document.getElementById('timeLeft').value = timeLeft; // update the hidden field
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      document.getElementById('timer').innerText = "Time's Up!";
+      // Here you can also disable the form to prevent further inputs
+      document.querySelector('input[type="submit"]').disabled = true;
+    }
+  }, 1000);
+</script>
